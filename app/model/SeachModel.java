@@ -28,7 +28,7 @@ public class SeachModel {
                 matchedSetenceIds.add(hash);
             }
         }
-        return matchedSentences(matchedSetenceIds);
+        return matchedSetenceIds;
     }
 
     public Set<String> W2relationW1Search(String w1, String w2, String rel) throws ObjectNotFoundException, InputDataErrException {
@@ -43,7 +43,7 @@ public class SeachModel {
                 matchedSetenceIds.add(hash);
             }
         }
-        return matchedSentences(matchedSetenceIds);
+        return matchedSetenceIds;
     }
 
     public Set<String> W1relationAnyParent(String w1, String rel) throws ObjectNotFoundException, InputDataErrException {
@@ -57,7 +57,7 @@ public class SeachModel {
                 matchedSetenceIds.add(hash);
             }
         }
-        return matchedSentences(matchedSetenceIds);
+        return matchedSetenceIds;
     }
 
     public Set<String> W1andW3childrenW2Search(String w1, String w2, String w3) throws InputDataErrException, ObjectNotFoundException {
@@ -72,7 +72,7 @@ public class SeachModel {
         //if (w1andW2 != null) {
         w1andW2.retainAll(w3andW2);
         //}
-        return matchedSentences(w1andW2);
+        return w1andW2;
     }
 
     public Set<String> matchedSentences (Set<String> hashs) throws ObjectNotFoundException {
