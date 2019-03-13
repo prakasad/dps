@@ -12,8 +12,11 @@ import edu.stanford.nlp.util.PropertiesUtils;
 import edu.stanford.nlp.util.logging.Redwood;
 import helper.Couchbase;
 import model.SentanceSearchModel;
+import utils.WordRelationUtils;
 
+import java.io.IOException;
 import java.util.Properties;
+
 
 /**
  * Demonstrates how to use the NN dependency
@@ -28,7 +31,7 @@ public class DependencyParserCoreNLPDemo {
 
     private DependencyParserCoreNLPDemo() {} // static main method only
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String text;
         if (args.length > 0) {
             text = IOUtils.slurpFileNoExceptions(args[0], "utf-8");
@@ -76,6 +79,10 @@ public class DependencyParserCoreNLPDemo {
             //module.configure();
             Couchbase couchbase = new Couchbase();
             Couchbase.update("Test", "{\"type\":1001, \"name\":\"Test1\"}");
+
+
+            WordRelationUtils wordRelationUtils = WordRelationUtils.getInstance();
+            System.out.println(wordRelationUtils.wordRelationsForSentenceMap(sg));
 
 
         }
