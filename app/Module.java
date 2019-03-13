@@ -1,9 +1,10 @@
 import com.google.inject.AbstractModule;
-import java.time.Clock;
-
+import helper.Couchbase;
 import services.ApplicationTimer;
 import services.AtomicCounter;
 import services.Counter;
+
+import java.time.Clock;
 
 /**
  * This class is a Guice module that tells Guice how to bind several
@@ -26,6 +27,8 @@ public class Module extends AbstractModule {
         bind(ApplicationTimer.class).asEagerSingleton();
         // Set AtomicCounter as the implementation for Counter.
         bind(Counter.class).to(AtomicCounter.class);
+
+        bind(Couchbase.class).asEagerSingleton();
     }
 
 }
