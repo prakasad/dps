@@ -55,7 +55,7 @@ public class DependencyParserCoreNLPDemo {
 
         pipeline.annotate(ann);
 
-        PreProcessFiles preProcessFiles = new PreProcessFiles();
+        PreProcessFiles preProcessFiles = new PreProcessFiles("/Users/Aditya/Desktop/SampleProjects/Play/dps/sentences.txt");
         Couchbase couchbase = new Couchbase();
         try {
             preProcessFiles.preProcessText(text);
