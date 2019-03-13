@@ -10,6 +10,7 @@ import edu.stanford.nlp.util.logging.Redwood;
 import helper.Couchbase;
 import javassist.tools.rmi.ObjectNotFoundException;
 import model.PreProcessFiles;
+import model.SeachModel;
 import model.SentanceSearchModel;
 import org.junit.Test;
 import play.Logger;
@@ -60,6 +61,20 @@ public class DependencyParserCoreNLPDemo {
             preProcessFiles.preProcessText(text);
         } catch (NoSuchAlgorithmException | InputDataErrException e) {
             Logger.error(String.format("%s", e.getStackTrace()));
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            w2childW1SearchTest();
+            System.out.println("W2realtionW1Search");
+            w2relationW1Search();
+            System.out.println("W2realtionAnyWordSearch");
+            w2relationAnyWordSearch();
+            System.out.println("W1andW3childW2Search");
+             w1andW3childW2Search();
+        } catch (InputDataErrException e) {
+            e.printStackTrace();
         } catch (ObjectNotFoundException e) {
             e.printStackTrace();
         }
@@ -156,6 +171,61 @@ public class DependencyParserCoreNLPDemo {
         System.out.println(sentanceSearchModel.W1andW3childW2Search("Kansas",  "Bills", "immigration"));
 
         System.out.println(sentanceSearchModel.W1andW3childW2Search("bills123",  "submitted", "brownback"));
+    }
+
+    public static void w2childW1SearchTest() throws InputDataErrException, ObjectNotFoundException {
+        SeachModel sentanceSearchModel = new SeachModel();
+
+        System.out.println(sentanceSearchModel.W2childW1Search("submitted", "immigration"));
+
+        System.out.println(sentanceSearchModel.W2childW1Search("were", "submitted"));
+
+
+    }
+
+    public static void w2relationW1Search() throws InputDataErrException, ObjectNotFoundException {
+        SeachModel sentanceSearchModel = new SeachModel();
+
+        // True
+        System.out.println(sentanceSearchModel.W2relationW1Search("submitted", "Bills", "nsubjpass"));
+
+        System.out.println(sentanceSearchModel.W2relationW1Search("submitted", "were", "auxpass"));
+
+        // False
+        System.out.println(sentanceSearchModel.W2relationW1Search("submitted", "Kansas", "nmod"));
+
+        System.out.println(sentanceSearchModel.W2relationW1Search("submitted", "Republican", "nsubjpass"));
+
+    }
+
+    public static void w2relationAnyWordSearch() throws InputDataErrException, ObjectNotFoundException {
+        SeachModel sentanceSearchModel = new SeachModel();
+
+
+        // True
+        System.out.println(sentanceSearchModel.W1relationAnyParent("Republican",  "nmod"));
+
+        System.out.println(sentanceSearchModel.W1relationAnyParent("immigration", "conj"));
+
+        // False
+        System.out.println(sentanceSearchModel.W1relationAnyParent("Republican123",  "nmod"));
+
+        System.out.println(sentanceSearchModel.W1relationAnyParent("immigration", "nmod"));
+    }
+
+
+    public static void w1andW3childW2Search() throws InputDataErrException, ObjectNotFoundException {
+        SeachModel sentanceSearchModel = new SeachModel();
+
+        // True
+        System.out.println(sentanceSearchModel.W1andW3childrenW2Search("bills",  "submitted", "brownback"));
+
+        System.out.println(sentanceSearchModel.W1andW3childrenW2Search("Kansas", "Republican", "Senator"));
+
+        // False
+        System.out.println(sentanceSearchModel.W1andW3childrenW2Search("Kansas",  "Bills", "immigration"));
+
+        System.out.println(sentanceSearchModel.W1andW3childrenW2Search("bills123",  "submitted", "brownback"));
     }
 
 }

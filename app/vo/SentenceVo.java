@@ -15,6 +15,10 @@ public class SentenceVo extends JsonEntity {
     }
 
 
+    public String getSentence() {
+        return sentence;
+    }
+
     @Override
     public JsonNode toJsonNode() {
         return CustomMapper.apiMapper.valueToTree(this);

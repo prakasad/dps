@@ -1,9 +1,11 @@
 package model;
 
 import Exceptions.InputDataErrException;
+import dbo.SentenceDao;
 import dbo.WordRelationDao;
 import dbo.WordSentenceIdDao;
 import javassist.tools.rmi.ObjectNotFoundException;
+import play.Logger;
 import utils.WordRelationUtils;
 import vo.*;
 
@@ -13,11 +15,7 @@ import java.util.Set;
 
 public class SeachModel {
 
-    WordSentenceIdDao wordSentenceDao = new WordSentenceIdDao();
-    WordRelationUtils wordRelationUtils = WordRelationUtils.getInstance();
-
     public Set<String> W2childW1Search(String w1, String w2) throws ObjectNotFoundException, InputDataErrException {
-        // TODO add tokezinztion. to words
         Set<String> matchedSetenceIds = new HashSet<>();
         w1 = WordRelationUtils.tokenizeString(w1);
         w2 = WordRelationUtils.tokenizeString(w2);
@@ -30,7 +28,7 @@ public class SeachModel {
                 matchedSetenceIds.add(hash);
             }
         }
-        return matchedSetenceIds;
+        return matchedSentences(matchedSetenceIds);
     }
 
     public Set<String> W2relationW1Search(String w1, String w2, String rel) throws ObjectNotFoundException, InputDataErrException {
@@ -45,7 +43,7 @@ public class SeachModel {
                 matchedSetenceIds.add(hash);
             }
         }
-        return matchedSetenceIds;
+        return matchedSentences(matchedSetenceIds);
     }
 
     public Set<String> W1relationAnyParent(String w1, String rel) throws ObjectNotFoundException, InputDataErrException {
@@ -59,7 +57,7 @@ public class SeachModel {
                 matchedSetenceIds.add(hash);
             }
         }
-        return matchedSetenceIds;
+        return matchedSentences(matchedSetenceIds);
     }
 
     public Set<String> W1andW3childrenW2Search(String w1, String w2, String w3) throws InputDataErrException, ObjectNotFoundException {
@@ -74,7 +72,17 @@ public class SeachModel {
         //if (w1andW2 != null) {
         w1andW2.retainAll(w3andW2);
         //}
-        return w1andW2;
+        return matchedSentences(w1andW2);
+    }
+
+    public Set<String> matchedSentences (Set<String> hashs) throws ObjectNotFoundException {
+        Logger.info(String.format("Matched String hashs %s", hashs));
+        Set<String> sentences = new HashSet<>();
+        for (String hash : hashs) {
+            SentenceVo sentenceVo = SentenceDao.getSentenceVo(hash);
+            sentences.add(sentenceVo.getSentence());
+        }
+        return sentences;
     }
 
     public boolean isW2decendentW1(String w1, String w2, String hash) throws ObjectNotFoundException, InputDataErrException {
