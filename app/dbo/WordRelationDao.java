@@ -18,6 +18,10 @@ public class WordRelationDao {
         return preProcessedDataKeyUtils.sentenceToUnquieHashId(text) + "|dpt"  ;
     }
 
+    private static String getWordRelationKeyForHash(String hash){
+        return hash + "|dpt"  ;
+    }
+
     public static void insertWordRelationMapVo(String text, WordRelationMapVo vo)
             throws NoSuchAlgorithmException, IOException, InputDataErrException {
         if(vo!=null) {
@@ -26,6 +30,6 @@ public class WordRelationDao {
     }
 
     public static WordRelationMapVo getWordRelationMapVo(String key) throws ObjectNotFoundException {
-        return couchbaseDao.getDocument(key, WordRelationMapVo.class);
+        return couchbaseDao.getDocument(getWordRelationKeyForHash(key), WordRelationMapVo.class);
     }
 }

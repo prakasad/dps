@@ -18,6 +18,10 @@ public class WordRelationMapVo extends  JsonEntity {
         this.wordRelationNodeMap = wordRelationNodeMap;
     }
 
+    public Map<String, WordRelationNode> getWordRelationNodeMap() {
+        return wordRelationNodeMap;
+    }
+
     @Override
     public JsonNode toJsonNode() {
         return CustomMapper.apiMapper.valueToTree(this);

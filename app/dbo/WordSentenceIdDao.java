@@ -29,7 +29,7 @@ public class WordSentenceIdDao {
         return couchbaseDao.getDocument(key, WordSentenceIdReverseMapVo.class);
     }
 
-    public boolean exists(String key){
+    public static boolean exists(String key){
         return couchbaseDao.exists(key);
     }
 }

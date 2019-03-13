@@ -31,7 +31,7 @@ public class PreProcessFiles {
     }
 
 
-    public void readFileAndExtractSentences() {
+    public void readFileAndExtractSentences() throws ObjectNotFoundException, NoSuchAlgorithmException, InputDataErrException, IOException {
         File file = new File(filePath);
         Scanner sc = null;
         try {
@@ -41,8 +41,12 @@ public class PreProcessFiles {
         }
 
         while (sc.hasNextLine()) {
-            // TODO : process stuff here.
-            System.out.println(sc.nextLine());
+            // Note : production code will be firing an event to kafka.
+            // another consumer will read the preProsseText method.
+            // Rudimentary way to preprocesing the text.
+            String line = sc.nextLine();
+            preProcessText(line);
+            System.out.println(line);
             System.out.println("----");
         }
     }
