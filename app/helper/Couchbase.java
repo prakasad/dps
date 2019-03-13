@@ -114,6 +114,10 @@ public class Couchbase {
         return obj;
     }
 
+    public static boolean exists(String key)  {
+        return bucket.exists(key);
+    }
+
     public static boolean update(String key, String val)  {
         Logger.debug("Setting Key "+key + " value " + val);
         try {

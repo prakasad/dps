@@ -36,5 +36,9 @@ public class CouchbaseDao {
         }
     }
 
+    public boolean exists(String key){
+        return Couchbase.exists(key);
+    }
+
 
 }

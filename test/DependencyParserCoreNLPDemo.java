@@ -8,6 +8,7 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.util.PropertiesUtils;
 import edu.stanford.nlp.util.logging.Redwood;
 import helper.Couchbase;
+import javassist.tools.rmi.ObjectNotFoundException;
 import model.PreProcessFiles;
 import model.SentanceSearchModel;
 import org.junit.Test;
@@ -59,6 +60,8 @@ public class DependencyParserCoreNLPDemo {
             preProcessFiles.preProcessText(text);
         } catch (NoSuchAlgorithmException | InputDataErrException e) {
             Logger.error(String.format("%s", e.getStackTrace()));
+        } catch (ObjectNotFoundException e) {
+            e.printStackTrace();
         }
 
 //        for (CoreMap sent : ann.get(CoreAnnotations.SentencesAnnotation.class)) {

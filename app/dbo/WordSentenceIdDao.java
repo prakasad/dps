@@ -28,4 +28,8 @@ public class WordSentenceIdDao {
     public static WordSentenceIdReverseMapVo getWordSentenceIdReverseMapVo(String key) throws ObjectNotFoundException {
         return couchbaseDao.getDocument(key, WordSentenceIdReverseMapVo.class);
     }
+
+    public boolean exists(String key){
+        return couchbaseDao.exists(key);
+    }
 }

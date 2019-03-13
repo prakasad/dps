@@ -119,7 +119,7 @@ public class WordRelationUtils {
         return new ParentRelNode(rel.getShortName());
     }
 
-    private String tokenizeString (String string) {
+    public static String tokenizeString (String string) {
         return string != null ? string.toLowerCase() : null;
     }
 

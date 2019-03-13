@@ -18,6 +18,19 @@ public class WordSentenceIdReverseMapVo extends JsonEntity {
         sentenceIds = new HashSet<>();
     }
 
+    public WordSentenceIdReverseMapVo(String tokenizedWord) {
+        this.tokenizedWord = tokenizedWord;
+        this.sentenceIds = new HashSet<>();
+    }
+
+    public Set<String> getSentenceIds() {
+        return sentenceIds;
+    }
+
+    public void setSentenceIds(Set<String> sentenceIds) {
+        this.sentenceIds = sentenceIds;
+    }
+
     @Override
     public JsonNode toJsonNode() {
         return CustomMapper.apiMapper.valueToTree(this);
