@@ -1,20 +1,20 @@
+import Exceptions.InputDataErrException;
 import edu.stanford.nlp.io.IOUtils;
-import edu.stanford.nlp.ling.CoreAnnotations;
-import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.parser.nndep.DependencyParser;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.AnnotationPipeline;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
-import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations;
-import edu.stanford.nlp.util.CoreMap;
 import edu.stanford.nlp.util.PropertiesUtils;
 import edu.stanford.nlp.util.logging.Redwood;
 import helper.Couchbase;
+import model.PreProcessFiles;
 import model.SentanceSearchModel;
-import utils.WordRelationUtils;
+import org.junit.Test;
+import play.Logger;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
 
@@ -30,6 +30,10 @@ public class DependencyParserCoreNLPDemo {
     private static final Redwood.RedwoodChannels log = Redwood.channels(DependencyParserCoreNLPDemo.class);
 
     private DependencyParserCoreNLPDemo() {} // static main method only
+
+    @Test
+    public void name() {
+    }
 
     public static void main(String[] args) throws IOException {
         String text;
@@ -49,43 +53,50 @@ public class DependencyParserCoreNLPDemo {
 
         pipeline.annotate(ann);
 
-
-        for (CoreMap sent : ann.get(CoreAnnotations.SentencesAnnotation.class)) {
-            SemanticGraph sg = sent.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class);
-            //log.info(IOUtils.eolChar + sg.toString(SemanticGraph.OutputFormat.LIST));
-           // System.out.println(IOUtils.eolChar + sg.toString(SemanticGraph.OutputFormat.LIST));
-            System.out.println(sg.toString(SemanticGraph.OutputFormat.LIST));
-            System.out.println(sg.toString(SemanticGraph.OutputFormat.RECURSIVE));
-            System.out.println(sg.toString(SemanticGraph.OutputFormat.XML));
-            System.out.println(sg.toString(CoreLabel.OutputFormat.ALL));
-            // TODO : uncomment later
-            W2childW1SearchTest(sg);
-            System.out.println("W2realtionW1Search");
-            W2realtionW1Search(sg);
-            System.out.println("W2realtionAnyWordSearch");
-            W2realtionAnyWordSearch(sg);
-            System.out.println("W1andW3childW2Search");
-            // TODO convert all the words to lower case.
-            W1andW3childW2Search(sg);
-            //sg.getNodeByWordPattern("submitted");
-
-            // sg.getParentsWithReln(sg.getNodeByWordPattern("Republican")
-
-            //sg.getNodeByWordPattern("Republican")
-            //PreProcessFiles preProcessFiles = new PreProcessFiles("/Users/Aditya/Desktop/SampleProjects/Play/dps/sentences.txt");
-            //preProcessFiles.readFileAndExtractSentences();
-
-            //Module module = new Module();
-            //module.configure();
-            Couchbase couchbase = new Couchbase();
-            Couchbase.update("Test", "{\"type\":1001, \"name\":\"Test1\"}");
-
-
-            WordRelationUtils wordRelationUtils = WordRelationUtils.getInstance();
-            System.out.println(wordRelationUtils.wordRelationsForSentenceMap(sg));
-
-
+        PreProcessFiles preProcessFiles = new PreProcessFiles();
+        Couchbase couchbase = new Couchbase();
+        try {
+            preProcessFiles.preProcessText(text);
+        } catch (NoSuchAlgorithmException | InputDataErrException e) {
+            Logger.error(String.format("%s", e.getStackTrace()));
         }
+
+//        for (CoreMap sent : ann.get(CoreAnnotations.SentencesAnnotation.class)) {
+//            SemanticGraph sg = sent.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class);
+//            //log.info(IOUtils.eolChar + sg.toString(SemanticGraph.OutputFormat.LIST));
+//           // System.out.println(IOUtils.eolChar + sg.toString(SemanticGraph.OutputFormat.LIST));
+//            System.out.println(sg.toString(SemanticGraph.OutputFormat.LIST));
+//            System.out.println(sg.toString(SemanticGraph.OutputFormat.RECURSIVE));
+//            System.out.println(sg.toString(SemanticGraph.OutputFormat.XML));
+//            System.out.println(sg.toString(CoreLabel.OutputFormat.ALL));
+//            // TODO : uncomment later
+//            W2childW1SearchTest(sg);
+//            System.out.println("W2realtionW1Search");
+//            W2realtionW1Search(sg);
+//            System.out.println("W2realtionAnyWordSearch");
+//            W2realtionAnyWordSearch(sg);
+//            System.out.println("W1andW3childW2Search");
+//            // TODO convert all the words to lower case.
+//            W1andW3childW2Search(sg);
+//            //sg.getNodeByWordPattern("submitted");
+//
+//            // sg.getParentsWithReln(sg.getNodeByWordPattern("Republican")
+//
+//            //sg.getNodeByWordPattern("Republican")
+//            //PreProcessFiles preProcessFiles = new PreProcessFiles("/Users/Aditya/Desktop/SampleProjects/Play/dps/sentences.txt");
+//            //preProcessFiles.readFileAndExtractSentences();
+//
+//            //Module module = new Module();
+//            //module.configure();
+//            Couchbase couchbase = new Couchbase();
+//            Couchbase.update("Test", "{\"type\":1001, \"name\":\"Test1\"}");
+//
+//
+//            WordRelationUtils wordRelationUtils = WordRelationUtils.getInstance();
+//            System.out.println(wordRelationUtils.wordRelationsForSentenceMap(sg));
+//
+//
+//        }
 
 
     }

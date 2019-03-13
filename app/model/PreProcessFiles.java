@@ -21,6 +21,9 @@ public class PreProcessFiles {
 
     String filePath;
 
+    public PreProcessFiles() {
+    }
+
     public PreProcessFiles(String filePath) {
         this.filePath = filePath;
     }
