@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class SeachModel {
 
-    //
+    // Searches if W2 is child/decedents of W1
     public Set<String> W2childW1Search(String w1, String w2) throws ObjectNotFoundException, InputDataErrException {
         Set<String> matchedSetenceIds = new HashSet<>();
         w1 = WordRelationUtils.tokenizeString(w1);
@@ -32,6 +32,7 @@ public class SeachModel {
         return matchedSetenceIds;
     }
 
+    // Searches if W2 with relation rel is child of W1
     public Set<String> W2relationW1Search(String w1, String w2, String rel) throws ObjectNotFoundException, InputDataErrException {
         Set<String> matchedSetenceIds = new HashSet<>();
         w1 = WordRelationUtils.tokenizeString(w1);
@@ -47,6 +48,7 @@ public class SeachModel {
         return matchedSetenceIds;
     }
 
+    // Searches if W1 has any parent with relation rel.
     public Set<String> W1relationAnyParent(String w1, String rel) throws ObjectNotFoundException, InputDataErrException {
         Set<String> matchedSetenceIds = new HashSet<>();
         w1 = WordRelationUtils.tokenizeString(w1);
@@ -61,6 +63,7 @@ public class SeachModel {
         return matchedSetenceIds;
     }
 
+    // Searches both W1 and W3 are child/decedents of W2.
     public Set<String> W1andW3childrenW2Search(String w1, String w2, String w3) throws InputDataErrException, ObjectNotFoundException {
         w1 = WordRelationUtils.tokenizeString(w1);
         w2 = WordRelationUtils.tokenizeString(w2);
