@@ -39,7 +39,7 @@ public class WordRelationUtils {
                 wordRelationsMap.put(word, createWordReationNode(indexedWord, sg));
             }
 
-            System.out.println(wordRelationsMap.get(word).toJsonNode());
+            //Logger.debug(wordRelationsMap.get(word).toJsonNode());
         }
 
 

@@ -69,10 +69,9 @@ public class ConsoleRunner {
 
     public static void preProcessFile() {
         PreProcessFiles preProcessFiles = new PreProcessFiles("sentences.txt");
-        Couchbase couchbase = new Couchbase();
+        //Couchbase couchbase = new Couchbase();
         try {
             preProcessFiles.readFileAndExtractSentences();
-            //preProcessFiles.preProcessText(text);
         } catch (NoSuchAlgorithmException | InputDataErrException | ObjectNotFoundException | IOException e) {
             Logger.error(String.format("%s", e.getStackTrace()));
         }

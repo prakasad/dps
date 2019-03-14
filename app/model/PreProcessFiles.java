@@ -5,6 +5,7 @@ import dbo.SentenceDao;
 import dbo.WordRelationDao;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import javassist.tools.rmi.ObjectNotFoundException;
+import play.Logger;
 import utils.PreProcessedDataKeyUtils;
 import utils.StopWordsAndPuncation;
 import utils.WordRelationUtils;
@@ -40,14 +41,19 @@ public class PreProcessFiles {
             System.out.println("File not found. Given file path is incorrect " +  e);
         }
 
+        Logger.info("Starting the text pre-processing.");
         while (sc.hasNextLine()) {
             // Note : production code will be firing an event to kafka.
             // another consumer will read the preProsseText method.
             // Rudimentary way to preprocesing the text.
             String line = sc.nextLine();
             preProcessText(line);
-            System.out.println(line);
-            System.out.println("----");
+
+            // Keeping these logs as the application as of now runs from a server.
+            System.out.println("pre-processing text : " + line);
+            Logger.info("pre-processing text : " + line);
+            System.out.println("----------------------------------");
+            Logger.info("----------------------------------");
         }
     }
 
@@ -68,7 +74,7 @@ public class PreProcessFiles {
         SentenceDao.insertSentenceVo(new SentenceVo(sentence));
         updateWordRelations(sentence, sg);
 
-        // Adding
+        // Adding reverse indexed information to Couchbase.
         StopWordsAndPuncation stopWordsAndPuncation = new StopWordsAndPuncation();
         stopWordsAndPuncation.updateReveseIndexMap(sg, hash);
 
