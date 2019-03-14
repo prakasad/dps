@@ -47,7 +47,7 @@ public class ConsoleRunner {
                     w1 = scanner.nextLine();
                     System.out.print("Enter Reln: ");
                     rel = scanner.nextLine();
-                    System.out.print("\n Enter word W2: ");
+                    System.out.print("Enter word W2: ");
                     w2 = scanner.nextLine();
                     System.out.println(String.format("Performing search for %s => (%s)%s", w1, rel, w2));
                     printSentences(searchService.W2relationW1Search(w1, w2, rel));
@@ -65,7 +65,7 @@ public class ConsoleRunner {
                     w1 = scanner.nextLine();
                     System.out.print("Enter word W2: ");
                     w2 = scanner.nextLine();
-                    System.out.print("\n Enter word W3: ");
+                    System.out.print("Enter word W3: ");
                     w3 = scanner.nextLine();
                     System.out.println(String.format("Performing search for %s <= %s => %s", w1, w2, w3));
                     printSentences(searchService.W1andW3childrenW2Search(w1, w2, w3));
@@ -107,7 +107,7 @@ public class ConsoleRunner {
         Couchbase couchbase = new Couchbase();
 
         // After initial run this flag can be set to false , as the database is pre populated.
-        Boolean preLoad = true;
+        Boolean preLoad = false;
         if (args.length > 0) {
             preLoad = Boolean.getBoolean(args[0]);
         } else {
