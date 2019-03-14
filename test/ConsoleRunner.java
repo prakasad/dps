@@ -32,7 +32,7 @@ public class ConsoleRunner {
                     w1 = scanner.nextLine();
                     System.out.print("\n Enter word W2: ");
                     w2 = scanner.nextLine();
-                    searchService.W2childW1Search(w1, w2);
+                    System.out.print(searchService.W2childW1Search(w1, w2));
                     break;
                 case 2:
                     System.out.print("Enter word W1: ");
@@ -41,14 +41,14 @@ public class ConsoleRunner {
                     rel = scanner.nextLine();
                     System.out.print("\n Enter word W2: ");
                     w2 = scanner.nextLine();
-                    searchService.W2relationW1Search(w1, w2, rel);
+                    System.out.print(searchService.W2relationW1Search(w1, w2, rel));
                     break;
                 case 3:
                     System.out.print("Enter word W1: ");
                     w1 = scanner.nextLine();
                     System.out.print("Enter Reln: ");
                     rel = scanner.nextLine();
-                    searchService.W1relationAnyParent(w1, rel);
+                    System.out.print(searchService.W1relationAnyParent(w1, rel));
                     break;
                 case 4:
                     System.out.print("Enter word W1: ");
@@ -57,7 +57,7 @@ public class ConsoleRunner {
                     rel = scanner.nextLine();
                     System.out.print("\n Enter word W3: ");
                     w2 = scanner.nextLine();
-                    searchService.W1relationAnyParent(w1, rel);
+                    System.out.print(searchService.W1relationAnyParent(w1, rel));
                     break;
             }
             } catch (ObjectNotFoundException | InputDataErrException e) {
