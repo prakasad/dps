@@ -60,10 +60,10 @@ public class ConsoleRunner {
                     System.out.print("Enter word W1: ");
                     w1 = scanner.nextLine();
                     System.out.print("Enter word W2: ");
-                    rel = scanner.nextLine();
-                    System.out.print("\n Enter word W3: ");
                     w2 = scanner.nextLine();
-                    System.out.print(searchService.W1relationAnyParent(w1, rel));
+                    System.out.print("\n Enter word W3: ");
+                    w3 = scanner.nextLine();
+                    System.out.print(searchService.W1andW3childrenW2Search(w1, w2, w3));
                     break;
                 default :
                     System.out.println("Please select correct input");

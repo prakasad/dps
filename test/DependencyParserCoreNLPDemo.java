@@ -56,8 +56,9 @@ public class DependencyParserCoreNLPDemo {
         PreProcessFiles preProcessFiles = new PreProcessFiles("/Users/Aditya/Desktop/SampleProjects/Play/dps/sentences.txt");
         Couchbase couchbase = new Couchbase();
         try {
-            preProcessFiles.readFileAndExtractSentences();
-            //preProcessFiles.preProcessText(text);
+
+            //preProcessFiles.readFileAndExtractSentences();
+            preProcessFiles.preProcessText(text);
         } catch (NoSuchAlgorithmException | InputDataErrException e) {
             Logger.error(String.format("%s", e.getStackTrace()));
         } catch (ObjectNotFoundException e) {
