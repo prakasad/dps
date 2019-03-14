@@ -25,6 +25,12 @@ public class ConsoleRunner {
             String w3 = null;
             String rel = null;
             SearchService searchService = SearchService.getInstance();
+
+            if (input == 5 ) {
+                System.out.print("Exiting the code.");
+                break;
+            }
+
             try {
             switch (input) {
                 case 1:
@@ -59,6 +65,9 @@ public class ConsoleRunner {
                     w2 = scanner.nextLine();
                     System.out.print(searchService.W1relationAnyParent(w1, rel));
                     break;
+                default :
+                    System.out.println("Please select correct input");
+                    break;
             }
             } catch (ObjectNotFoundException | InputDataErrException e) {
                 Logger.error(String.format("" + e.getStackTrace()));
@@ -79,12 +88,13 @@ public class ConsoleRunner {
 
     public static void main(String[] args) {
         Couchbase couchbase = new Couchbase();
-        System.out.println("This assumes that text files are pre processed and present in couchbase.");
 
         // After initial run this flag can be set to false , as the database is pre populated.
         Boolean preLoad = true;
         if (args.length > 0) {
             preLoad = Boolean.getBoolean(args[0]);
+        } else {
+            System.out.println("This assumes that text files are pre processed and present in couchbase.");
         }
 
         if (preLoad) {
