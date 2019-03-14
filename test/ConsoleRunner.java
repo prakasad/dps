@@ -8,6 +8,7 @@ import services.SearchService;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ConsoleRunner {
 
@@ -38,7 +39,8 @@ public class ConsoleRunner {
                     w1 = scanner.nextLine();
                     System.out.print("\n Enter word W2: ");
                     w2 = scanner.nextLine();
-                    System.out.print(searchService.W2childW1Search(w1, w2));
+                    System.out.println(String.format("Performing search for %s => %s", w1, w2));
+                    printSentences(searchService.W2childW1Search(w1, w2));
                     break;
                 case 2:
                     System.out.print("Enter word W1: ");
@@ -47,14 +49,16 @@ public class ConsoleRunner {
                     rel = scanner.nextLine();
                     System.out.print("\n Enter word W2: ");
                     w2 = scanner.nextLine();
-                    System.out.print(searchService.W2relationW1Search(w1, w2, rel));
+                    System.out.println(String.format("Performing search for %s => (%s)%s", w1, rel, w2));
+                    printSentences(searchService.W2relationW1Search(w1, w2, rel));
                     break;
                 case 3:
                     System.out.print("Enter word W1: ");
                     w1 = scanner.nextLine();
                     System.out.print("Enter Reln: ");
                     rel = scanner.nextLine();
-                    System.out.print(searchService.W1relationAnyParent(w1, rel));
+                    System.out.println(String.format("Performing search for * => (%s)%s", rel, w1));
+                    printSentences(searchService.W1relationAnyParent(w1, rel));
                     break;
                 case 4:
                     System.out.print("Enter word W1: ");
@@ -63,7 +67,8 @@ public class ConsoleRunner {
                     w2 = scanner.nextLine();
                     System.out.print("\n Enter word W3: ");
                     w3 = scanner.nextLine();
-                    System.out.print(searchService.W1andW3childrenW2Search(w1, w2, w3));
+                    System.out.println(String.format("Performing search for %s <= %s => %s", w1, w2, w3));
+                    printSentences(searchService.W1andW3childrenW2Search(w1, w2, w3));
                     break;
                 default :
                     System.out.println("Please select correct input");
@@ -84,6 +89,18 @@ public class ConsoleRunner {
         } catch (NoSuchAlgorithmException | InputDataErrException | ObjectNotFoundException | IOException e) {
             Logger.error(String.format("%s", e.getStackTrace()));
         }
+    }
+
+    private static void  printSentences (Set<String> sentences) {
+        if (sentences.size() > 0) {
+            System.out.println("Seach Results for the given query is :");
+        } else {
+            System.out.println("No seach results found for the given query.");
+        }
+        for (String s : sentences) {
+            System.out.println(s);
+        }
+
     }
 
     public static void main(String[] args) {

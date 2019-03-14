@@ -53,12 +53,12 @@ public class DependencyParserCoreNLPDemo {
 
         pipeline.annotate(ann);
 
-        PreProcessFiles preProcessFiles = new PreProcessFiles("/Users/Aditya/Desktop/SampleProjects/Play/dps/sentences.txt");
+        PreProcessFiles preProcessFiles = new PreProcessFiles("testSentences.txt");
         Couchbase couchbase = new Couchbase();
         try {
 
-            //preProcessFiles.readFileAndExtractSentences();
-            preProcessFiles.preProcessText(text);
+            preProcessFiles.readFileAndExtractSentences();
+            //preProcessFiles.preProcessText(text);
         } catch (NoSuchAlgorithmException | InputDataErrException e) {
             Logger.error(String.format("%s", e.getStackTrace()));
         } catch (ObjectNotFoundException e) {
@@ -66,6 +66,7 @@ public class DependencyParserCoreNLPDemo {
         }
 
         try {
+            System.out.println("W2realtionW1Search");
             w2childW1SearchTest();
             System.out.println("W2realtionW1Search");
             w2relationW1Search();
@@ -78,45 +79,6 @@ public class DependencyParserCoreNLPDemo {
         } catch (ObjectNotFoundException e) {
             e.printStackTrace();
         }
-
-//        for (CoreMap sent : ann.get(CoreAnnotations.SentencesAnnotation.class)) {
-//            SemanticGraph sg = sent.get(SemanticGraphCoreAnnotations.BasicDependenciesAnnotation.class);
-//            //log.info(IOUtils.eolChar + sg.toString(SemanticGraph.OutputFormat.LIST));
-//           // System.out.println(IOUtils.eolChar + sg.toString(SemanticGraph.OutputFormat.LIST));
-//            System.out.println(sg.toString(SemanticGraph.OutputFormat.LIST));
-//            System.out.println(sg.toString(SemanticGraph.OutputFormat.RECURSIVE));
-//            System.out.println(sg.toString(SemanticGraph.OutputFormat.XML));
-//            System.out.println(sg.toString(CoreLabel.OutputFormat.ALL));
-//            // TODO : uncomment later
-//            W2childW1SearchTest(sg);
-//            System.out.println("W2realtionW1Search");
-//            W2realtionW1Search(sg);
-//            System.out.println("W2realtionAnyWordSearch");
-//            W2realtionAnyWordSearch(sg);
-//            System.out.println("W1andW3childW2Search");
-//            // TODO convert all the words to lower case.
-//            W1andW3childW2Search(sg);
-//            //sg.getNodeByWordPattern("submitted");
-//
-//            // sg.getParentsWithReln(sg.getNodeByWordPattern("Republican")
-//
-//            //sg.getNodeByWordPattern("Republican")
-//            //PreProcessFiles preProcessFiles = new PreProcessFiles("/Users/Aditya/Desktop/SampleProjects/Play/dps/sentences.txt");
-//            //preProcessFiles.readFileAndExtractSentences();
-//
-//            //Module module = new Module();
-//            //module.configure();
-//            Couchbase couchbase = new Couchbase();
-//            Couchbase.update("Test", "{\"type\":1001, \"name\":\"Test1\"}");
-//
-//
-//            WordRelationUtils wordRelationUtils = WordRelationUtils.getInstance();
-//            System.out.println(wordRelationUtils.wordRelationsForSentenceMap(sg));
-//
-//
-//        }
-
-
     }
 
 

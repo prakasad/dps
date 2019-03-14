@@ -15,6 +15,7 @@ import java.util.Set;
 
 public class SeachModel {
 
+    //
     public Set<String> W2childW1Search(String w1, String w2) throws ObjectNotFoundException, InputDataErrException {
         Set<String> matchedSetenceIds = new HashSet<>();
         w1 = WordRelationUtils.tokenizeString(w1);
