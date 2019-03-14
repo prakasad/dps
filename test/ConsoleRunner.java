@@ -1,9 +1,12 @@
 import Exceptions.InputDataErrException;
 import helper.Couchbase;
 import javassist.tools.rmi.ObjectNotFoundException;
+import model.PreProcessFiles;
 import play.Logger;
 import services.SearchService;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 public class ConsoleRunner {
@@ -11,7 +14,7 @@ public class ConsoleRunner {
     public static void run() {
 
         // Initialize couchbase
-        Couchbase couchbase = new Couchbase();
+
         final Scanner scanner = new Scanner(System.in);
         while(true) {
             System.out.println("Select Search Query Option");
@@ -64,8 +67,30 @@ public class ConsoleRunner {
         }
     }
 
+    public static void preProcessFile() {
+        PreProcessFiles preProcessFiles = new PreProcessFiles("sentences.txt");
+        Couchbase couchbase = new Couchbase();
+        try {
+            preProcessFiles.readFileAndExtractSentences();
+            //preProcessFiles.preProcessText(text);
+        } catch (NoSuchAlgorithmException | InputDataErrException | ObjectNotFoundException | IOException e) {
+            Logger.error(String.format("%s", e.getStackTrace()));
+        }
+    }
+
     public static void main(String[] args) {
+        Couchbase couchbase = new Couchbase();
         System.out.println("This assumes that text files are pre processed and present in couchbase.");
+
+        // After initial run this flag can be set to false , as the database is pre populated.
+        Boolean preLoad = true;
+        if (args.length > 0) {
+            preLoad = Boolean.getBoolean(args[0]);
+        }
+
+        if (preLoad) {
+            preProcessFile();
+        }
 
         run();
     }

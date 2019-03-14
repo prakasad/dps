@@ -26,10 +26,12 @@ public class Couchbase {
     private static Bucket bucket;
     private static Config config;
 
-    // For reverse Index cache bucket (Handled Much better with ES)
-    private static  Bucket cacheBucket;
     private static int TIMEOUT_CACHE_DOC = 200;
 
+    public static final String CB_HOST = "127.0.0.1:8091";
+    public static final String CB_USERNAME="Administrator";
+    public static final String CB_PWD="couchbase";
+    public static final String DPS_BUCKET="dps";
 
     @Inject
     public Couchbase(ApplicationLifecycle appLifecycle, Config config) {
@@ -48,8 +50,8 @@ public class Couchbase {
     }
 
     private Authenticator getCBAuthenticator() {
-        PasswordAuthenticator auth = new PasswordAuthenticator("Administrator",
-                "couchbase");
+        PasswordAuthenticator auth = new PasswordAuthenticator(CB_USERNAME,
+                CB_PWD);
         return auth;
     }
 
@@ -67,7 +69,7 @@ public class Couchbase {
                     CouchbaseEnvironment env = DefaultCouchbaseEnvironment.builder()
                             .connectTimeout(30000) //10000ms = 10s, default is 5s
                             .build();
-                    cluster = CouchbaseCluster.create(env, "127.0.0.1:8091");
+                    cluster = CouchbaseCluster.create(env, CB_HOST);
                     //Comment this for CB4.
                     cluster.authenticate(getCBAuthenticator());
                     Logger.info("Initialized couchbase cluster.");
@@ -79,10 +81,7 @@ public class Couchbase {
     }
 
     private boolean connectToBucket() {
-        this.bucket = cluster.openBucket("dps");
-        this.cacheBucket = cluster.openBucket("index");
-        //this.customeventBucket = cluster.openBucket(config.getString("couchbase.customevent_bucket"));
-
+        this.bucket = cluster.openBucket(DPS_BUCKET);
         return true;
     }
 
@@ -99,7 +98,7 @@ public class Couchbase {
 
 
     private boolean disconnectBucket() {
-        return this.bucket.close(5, TimeUnit.SECONDS) && this.cacheBucket.close(5, TimeUnit.SECONDS);
+        return this.bucket.close(5, TimeUnit.SECONDS) ;
     }
 
     public static JsonDocument get(String key)  {
@@ -134,7 +133,7 @@ public class Couchbase {
         try {
             Logger.debug("Deleting Key : " + key);
             bucket.remove(key);
-            JsonDocument jsonDocument = cacheBucket.get(key);
+            JsonDocument jsonDocument = bucket.get(key);
             if (jsonDocument == null) {
                 Logger.debug("Deleting Key Done : " + key);
                 return true;
