@@ -22,14 +22,14 @@ Then run the ConsoleRunner in the test folder.
 
 Note before running the files :
     a) There is flag <b>preLoad</b> id true, which will populate the couchbase database.  It will take around 8 -10 mins to populate the sentences file.
-    b) For future runs set <b>preLoad</b> tio false.
+    b) For future runs set <b>preLoad</b> to false.
     
 
 # Test cases :
 Few unit test cases in test folder.
 
-Also some basic sample out for various 4 kinds of search is present in DependencyParserCoreNLPDemo.java.  
-It will populate the testSentences file to couchase and run some sample search queries. 
+Also some basic sample output for 4 kinds of search is present in DependencyParserCoreNLPDemo.java.  
+It will populate the testSentences file to couchbase and run some sample search queries. 
   
 
 
