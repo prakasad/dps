@@ -18,7 +18,7 @@ public class ConsoleRunner {
         final Scanner scanner = new Scanner(System.in);
         while(true) {
             System.out.println("Select Search Query Option");
-            System.out.println("1. W1 => W2 \n2.W1 => (R)W2 \n3.* => (R)W1 \n4.W1<=W2=>W3");
+            System.out.println("1. W1 => W2 \n2.W1 => (R)W2 \n3.* => (R)W1 \n4.W1<=W2=>W3 \n 5.Exit.");
             final Integer input = Integer.parseInt(scanner.nextLine());
             String w1 = null;
             String w2 = null;
